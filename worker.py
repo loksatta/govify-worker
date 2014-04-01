@@ -72,20 +72,34 @@ def do_main_program() :
             os.remove(new_filename)
 
 def do_mail(email, link) :
-    msg = """Howdy!  Your .gov.ify processed file is now available at the following URL:
+    msg_txt = """Congratulations! Your .gov.ify-ed file is now available for download,
+printing and sharing at the following URL:
 
 {0}
 
-Though the file is real, this whole thing is actually an April Fool's prank from OpenGov
-Foundation.  If you'd like to check out our other work, head on over to our website:
+Nice job!  And while the file is real, this whole thing is really just an April Fool's
+joke from the merry pranksters at the OpenGov Foundation. Hope you enjoyed it.  Now,
+come check out our authentic open data work and our serious open source projects on Github.
 
 http://opengovfoundation.org/
 
 """.format(link)
 
+    msg_html = """Congratulations! Your .gov.ify-ed file is now available for download, printing and
+sharing at the following URL:<br/>
+<br/>
+<a href="{0}">{0}</a><br/>
+<br/>
+Nice job!  And while the file is real, this whole thing is really just an April Fool's
+joke from the merry pranksters at the <a href="http://opengovfoundation.org/">OpenGov Foundation</a>.
+Hope you enjoyed it.  Now, come check out our authentic <a href="http://americadecoded.org/">open
+data work</a> and our serious <a href="https://github.com/opengovfoundation">open source projects</a> on Github.
+
+""".format(link)
+
     sg = sendgrid.SendGridClient(config.sendgrid['USERNAME'], config.sendgrid['PASSWORD'])
 
-    message = sendgrid.Mail(to=email, subject='Your .gov.ify file has been processed', html=msg.replace('\n', '<br />'), text=msg, from_email=config.sendgrid['FROM'])
+    message = sendgrid.Mail(to=email, subject='.gov.ify : Your Government-Ready PDF Is Ready for Download!', html=msg_html, text=msg_txt, from_email=config.sendgrid['FROM'])
     status, msg = sg.send(message)
 
 def run():
