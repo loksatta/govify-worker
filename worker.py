@@ -42,7 +42,7 @@ def do_main_program() :
 
             # If we successfully govify'd the document
             try:
-                subprocess.check_call(["./govify", new_filename])
+                subprocess.check_call(["/usr/bin/govify", new_filename])
 
                 f = open(new_filename + '.pdf', 'r')
 
